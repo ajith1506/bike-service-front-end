@@ -6,11 +6,11 @@ import Bikes from "./Bikes";
 import Services from "./Services";
 import Mechanic from "./Mechanic";
 import Orders from "./Order";
-import AuthService from "../../../services/member/auth_service";
+import { authService } from "../../../services/member/auth_service";
 
 function Admin(props) {
   useEffect(() => {
-    const admin = AuthService.getAdmin();
+    const admin = authService.getAdmin();
     if (admin === null) {
       props.history.push("/login");
     }

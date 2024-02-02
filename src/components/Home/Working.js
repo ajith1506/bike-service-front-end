@@ -1,6 +1,7 @@
 import React from "react";
 import "./Working.css";
-import { makeStyles } from "@mui/system";
+import { styled } from "@mui/system";
+import { makeStyles } from "@mui/styles"; // Import makeStyles
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
@@ -16,15 +17,22 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles((theme) => ({
+  // Define your styles here
   paper: {
-    padding: "6px 16px",
+    padding: theme.spacing(2),
   },
   secondaryTail: {
     backgroundColor: theme.palette.secondary.main,
   },
 }));
-function Working() {
-  const classes = useStyles();
+
+const StyledPaper = styled(Paper)({
+  padding: "6px 16px",
+});
+
+const Working = () => {
+  const classes = useStyles(); // Use makeStyles to get the classes
+
   return (
     <div className="container">
       <h1>How YAMAHA Works?</h1>
@@ -124,6 +132,6 @@ function Working() {
       </Timeline>
     </div>
   );
-}
+};
 
 export default Working;

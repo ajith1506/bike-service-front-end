@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../Home/Navbar.css";
 import { Link, NavLink } from "react-router-dom";
-import AuthService from "../../../services/member/auth_service";
+import { authService } from "../../../services/member/auth_service";
 
 function AdminNav() {
   const [show, setShow] = useState(false);
@@ -18,7 +18,7 @@ function AdminNav() {
   }, []);
 
   const logout = () => {
-    AuthService.logout();
+    authService.logout();
   };
 
   return (

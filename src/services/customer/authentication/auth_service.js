@@ -2,7 +2,7 @@ import axios from "axios";
 
 const AUTH_URL = "http://localhost:3000/customer/auth";
 
-class Authservice {
+class AuthService {
   constructor() {
     this.authenticated = false;
   }
@@ -45,4 +45,4 @@ class Authservice {
   }
 }
 
-export default new Authservice();
+export const authService = new AuthService();

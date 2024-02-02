@@ -5,18 +5,18 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import AurhService from "../../services/customer/authentication/auth_service";
+import { authService } from "../../services/customer/authentication/auth_service";
 
 function Register(props) {
   const { handleSubmit, register, errors } = useForm({
     mode: "onBlur",
   });
   const onSubmit = (values) => {
-    AurhService.register(values.name, values.email, values.password).then(
-      (respone) => {
+    authService
+      .register(values.name, values.email, values.password)
+      .then((respone) => {
         props.history.push("/login");
-      }
-    );
+      });
   };
   return (
     <Container maxWidth="xs">

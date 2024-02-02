@@ -15,7 +15,7 @@ function Bikes() {
   const getAllBikes = () => {
     BikeServices.getAllBikes()
       .then((response) => {
-        setCars(response);
+        setBikes(response);
       })
       .catch((err) => {
         console.log(err);
@@ -46,7 +46,7 @@ function Bikes() {
         .then((res) => {
           let dataToAdd = [...bikes];
           dataToAdd.push(newData);
-          setCars(dataToAdd);
+          setBikes(dataToAdd);
           resolve();
           setErrorMessages([]);
           setIserror(false);
@@ -69,10 +69,10 @@ function Bikes() {
   const handleRowDelete = (oldData, resolve) => {
     BikeServices.deleteBike(oldData._id)
       .then((res) => {
-        const dataDelete = [...cars];
+        const dataDelete = [...bikes];
         const index = oldData.tableData.id;
         dataDelete.splice(index, 1);
-        setCars([...dataDelete]);
+        setBikes([...dataDelete]);
         resolve();
         enqueueSnackbar(res, {
           variant: "success",
@@ -96,7 +96,7 @@ function Bikes() {
           const dataUpdate = [...bikes];
           const index = oldData.tableData.id;
           dataUpdate[index] = newData;
-          setCars([...dataUpdate]);
+          setBikes([...dataUpdate]);
           resolve();
           setIserror(false);
           setErrorMessages([]);

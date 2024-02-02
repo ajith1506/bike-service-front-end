@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import CustNav from "./CustNav";
 import CustHome from "./CustHome";
 import Bikes from "./Bikes";
@@ -8,11 +8,11 @@ import Login from "../Home/Login";
 import Order from "./Order";
 import MyBookings from "./MyBooking";
 import Contact from "../Home/Contact";
-import AuthService from "../../services/customer/authentication/auth_service";
+import { authService } from "../../services/customer/authentication/auth_service";
 
 function Cust_Home(props) {
   useEffect(() => {
-    const user = AuthService.getCurrentCustomer();
+    const user = authService.getCurrentCustomer();
     if (user === null) {
       props.history.push("/login");
     }
@@ -20,7 +20,7 @@ function Cust_Home(props) {
   return (
     <div>
       <CustNav />
-      <Routes>
+      <Switch>
         <Route exact path="/cust_home" component={CustHome} />
         <Route exact path="/cust_home/contact" component={Contact} />
         <Route
@@ -41,7 +41,7 @@ function Cust_Home(props) {
           render={(props) => <MyBookings {...props} />}
         />
         <Route path="/login" component={Login} />
-      </Routes>
+      </Switch>
     </div>
   );
 }

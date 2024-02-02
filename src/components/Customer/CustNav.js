@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../Home/Navbar.css";
 import { Link, NavLink } from "react-router-dom";
-import AuthService from "../../services/customer/authentication/auth_service";
+import { authService } from "../../services/customer/authentication/auth_service";
 
 function CustNav() {
   const [show, setShow] = useState(false);
@@ -18,7 +18,7 @@ function CustNav() {
   }, []);
 
   const logout = () => {
-    AuthService.logout();
+    authService.logout();
   };
 
   return (

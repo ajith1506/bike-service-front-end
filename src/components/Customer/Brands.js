@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter } from "react-router-dom";
 import {
   Grid,
   CardContent,
@@ -20,6 +19,7 @@ function Brands(props) {
   const handleSearchChange = (e) => {
     setfilter(e.target.value);
   };
+
   const retrieveBrands = () => {
     BikeService.getAllBrands()
       .then((response) => {
@@ -29,6 +29,7 @@ function Brands(props) {
         console.log(err);
       });
   };
+
   useEffect(() => {
     retrieveBrands();
   }, []);
@@ -38,7 +39,7 @@ function Brands(props) {
       <Grid item xs={6} sm={4} md={3} lg={2} key={brand}>
         <Card
           className="card"
-          onclick={() => history.push(`cust_home/bikes/${brands[brand]}`)}
+          onClick={() => history.push(`cust_home/bikes/${brands[brand]}`)}
         >
           <CardContent>
             <Typography className="text">{brands[brand]}</Typography>
@@ -73,4 +74,4 @@ function Brands(props) {
   );
 }
 
-export default BrowserRouter(Brands);
+export default Brands; // Remove BrowserRouter here

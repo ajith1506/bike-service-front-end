@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "react-bootstrap/Button";
 import Container from "@mui/material/Container";
 import { useForm } from "react-hook-form";
-import AurhService from "../../services/member/auth_service";
+import { authService } from "../../services/member/auth_service";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -14,7 +14,7 @@ export default function Member_Login(props) {
     mode: "onBlur",
   });
   const onSubmit = (values) => {
-    AurhService.login(values.email, values.password).then((respone) => {
+    authService.login(values.email, values.password).then((respone) => {
       if (respone.role === "ADMIN") {
         props.history.push("/admin_home");
       } else {

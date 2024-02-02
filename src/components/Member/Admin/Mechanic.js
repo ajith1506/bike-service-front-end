@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AuthServices from "../../../services/member/auth_service";
+import { authService } from "../../../services/member/auth_service";
 import MechanicServices from "../../../services/member/Mechanic/Mechanic_Services";
 import "./CSS/Bikes.css";
 import { useSnackbar } from "notistack";
@@ -49,12 +49,13 @@ function Mechanic() {
   };
 
   const onSubmit = (values) => {
-    AuthServices.registerMechanic(
-      values.name,
-      values.email,
-      values.password,
-      values.mobile
-    )
+    authService
+      .registerMechanic(
+        values.name,
+        values.email,
+        values.password,
+        values.mobile
+      )
       .then((res) => {
         enqueueSnackbar(res, {
           variant: "success",

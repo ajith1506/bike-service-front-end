@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import AurhService from "../../services/customer/authentication/auth_service";
+import { authService } from "../../services/customer/authentication/auth_service";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -18,7 +18,7 @@ export default function Login(props) {
     mode: "onBlur",
   });
   const onSubmit = (values) => {
-    AurhService.login(values.email, values.password).then((response) => {
+    authService.login(values.email, values.password).then((response) => {
       console.log(response);
       props.history.push("/cust_home");
     });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AuthService from "../../services/customer/authentication/auth_service";
+import { authService } from "../../services/customer/authentication/auth_service";
 import CustomerService from "../../services/customer/customer_service";
 import BikeService from "../../services/member/Bike/bike_services";
 import PackageService from "../../services/member/package/package_services";
@@ -38,7 +38,7 @@ function Order(props) {
   };
 
   useEffect(() => {
-    const user = AuthService.getCurrentCustomer();
+    const user = authService.getCurrentCustomer();
     console.log(user);
     setUser(user);
 

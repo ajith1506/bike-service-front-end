@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import WhyUs from "./WhyUs";
 import Login from "./Login";
@@ -13,7 +13,7 @@ function Home() {
   return (
     <Router>
       <Navbar />
-      <Routes>
+      <Switch>
         <Route exact path="/" component={WhyUs} />
         <Route exact path="/whyus" component={WhyUs} />
         <Route exact path="/working" component={Working} />
@@ -21,7 +21,7 @@ function Home() {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/member_login" component={Member_Login} />
-      </Routes>
+      </Switch>
       <Footer />
     </Router>
   );

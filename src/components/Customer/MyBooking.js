@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomerService from "../../services/customer/customer_service";
-import AuthService from "../../services/customer/authentication/auth_service";
+import { authService } from "../../services/customer/authentication/auth_service";
 import "./CSS/MyBooking.css";
 import { Card, Grid, CardContent } from "@mui/material";
 
@@ -8,7 +8,7 @@ function MyBooking() {
   const [orders, setorders] = useState([]);
 
   useEffect(() => {
-    const user = AuthService.getCurrentCustomer();
+    const user = authService.getCurrentCustomer();
     CustomerService.findMyOrders(user.userId)
       .then((res) => {
         setorders(res);

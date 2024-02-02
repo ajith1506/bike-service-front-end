@@ -89,4 +89,4 @@ class Package {
   }
 }
 
-export default Package();
+export default new Package();
