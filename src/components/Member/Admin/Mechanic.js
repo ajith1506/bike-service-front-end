@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { authService } from "../../../services/member/auth_service";
-import MechanicServices from "../../../services/member/Mechanic/Mechanic_Services";
+import { mechanicService } from "../../../services/member/Mechanic/Mechanic_Services";
 import "./CSS/Bikes.css";
 import { useSnackbar } from "notistack";
 import TextField from "@mui/material/TextField";
@@ -15,7 +15,8 @@ function Mechanic() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const getAllMecahnic = () => {
-    MechanicServices.findAll()
+    mechanicService
+      .findAll()
       .then((response) => {
         setMechanic(response);
       })
@@ -67,7 +68,8 @@ function Mechanic() {
   };
 
   const handleRowDelete = (oldData, resolve) => {
-    MechanicServices.deleteAccount(oldData._id)
+    mechanicService
+      .deleteAccount(oldData._id)
       .then((res) => {
         const dataDelete = [...mechanic];
         const index = oldData.tableData.id;

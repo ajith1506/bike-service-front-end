@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AdminOrders from "../../../services/member/orders/admin_orders";
+import { adminOrders } from "../../../services/member/orders/admin_orders";
 import "./CSS/Bikes.css";
 import { useSnackbar } from "notistack";
 import { Table } from "@mui/material";
@@ -14,7 +14,8 @@ function Orders() {
   const [errorMessages, setErrorMessages] = useState([]);
 
   const getPlacedOrders = () => {
-    AdminOrders.findPlacedOrders()
+    adminOrders
+      .findPlacedOrders()
       .then((response) => {
         setOrders(response);
       })
@@ -24,7 +25,8 @@ function Orders() {
   };
 
   const getCompletedOrders = () => {
-    AdminOrders.findCompletedOrders()
+    adminOrders
+      .findCompletedOrders()
       .then((res) => {
         setCompletedOrders(res);
       })
@@ -73,7 +75,8 @@ function Orders() {
   const handleRowUpdate = (newData, oldData, resolve) => {
     let errorList = [];
     if (errorList.length < 1) {
-      AdminOrders.assignOrder(newData._id, newData.mechanicId)
+      adminOrders
+        .assignOrder(newData._id, newData.mechanicId)
         .then((res) => {
           const dataUpdate = [...orders];
           const index = oldData.tableData.id;

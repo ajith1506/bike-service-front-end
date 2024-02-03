@@ -6,7 +6,7 @@ import BallotIcon from "@mui/icons-material/Ballot";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import AdminOrders from "../../../services/member/orders/admin_orders";
+import { adminOrders } from "../../../services/member/orders/admin_orders";
 import {
   Drawer,
   List,
@@ -55,7 +55,8 @@ function AdminHome(props) {
   ];
 
   const getCompletedOrders = () => {
-    AdminOrders.findCompletedOrders()
+    adminOrders
+      .findCompletedOrders()
       .then((res) => {
         setOrders(res);
       })

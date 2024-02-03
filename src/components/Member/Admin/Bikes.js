@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import BikeServices from "../../../services/member/Bike/bike_services";
+import { bikeService } from "../../../services/member/Bike/bike_services";
 import "./CSS/Bikes.css";
 import { useSnackbar } from "notistack";
 import { Table } from "@mui/material";
@@ -13,7 +13,8 @@ function Bikes() {
   const [errorMessages, setErrorMessages] = useState([]);
 
   const getAllBikes = () => {
-    BikeServices.getAllBikes()
+    bikeService
+      .getAllBikes()
       .then((response) => {
         setBikes(response);
       })
@@ -42,7 +43,8 @@ function Bikes() {
     }
 
     if (errorList.length < 1) {
-      BikeServices.addBike(newData.name, newData.brand)
+      bikeService
+        .addBike(newData.name, newData.brand)
         .then((res) => {
           let dataToAdd = [...bikes];
           dataToAdd.push(newData);
@@ -67,7 +69,8 @@ function Bikes() {
   };
 
   const handleRowDelete = (oldData, resolve) => {
-    BikeServices.deleteBike(oldData._id)
+    bikeService
+      .deleteBike(oldData._id)
       .then((res) => {
         const dataDelete = [...bikes];
         const index = oldData.tableData.id;
@@ -91,7 +94,8 @@ function Bikes() {
       errorList.push("Please enter Brand name");
     }
     if (errorList.length < 1) {
-      BikeServices.updateBike(newData._id, newData.brand)
+      bikeService
+        .updateBike(newData._id, newData.brand)
         .then((res) => {
           const dataUpdate = [...bikes];
           const index = oldData.tableData.id;

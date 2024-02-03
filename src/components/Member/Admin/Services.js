@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PackageServices from "../../../services/member/package/package_services";
+import { packages } from "../../../services/member/package/package_services";
 import "./CSS/Bikes.css";
 import { useSnackbar } from "notistack";
 import { Table } from "@mui/material";
@@ -13,7 +13,8 @@ function Services() {
   const [errorMessages, setErrorMessages] = useState([]);
 
   const getAllServices = () => {
-    PackageServices.getAllServices()
+    packages
+      .getAllServices()
       .then((response) => {
         setServices(response);
       })
@@ -53,14 +54,15 @@ function Services() {
       errorList.push("All fields are Required");
     }
     if (errorList.length < 1) {
-      PackageServices.addService(
-        newData.serviceType,
-        newData.name,
-        newData.price,
-        newData.description,
-        newData.timeRequired,
-        newData.where
-      )
+      packages
+        .addService(
+          newData.serviceType,
+          newData.name,
+          newData.price,
+          newData.description,
+          newData.timeRequired,
+          newData.where
+        )
         .then((res) => {
           let dataToAdd = [...services];
           dataToAdd.push(newData);
@@ -88,7 +90,8 @@ function Services() {
   };
 
   const handleRowDelete = (oldData, resolve) => {
-    PackageServices.deleteService(oldData._id)
+    packages
+      .deleteService(oldData._id)
       .then((res) => {
         const dataDelete = [...services];
         const index = oldData.tableData.id;
@@ -112,15 +115,16 @@ function Services() {
   const handleRowUpdate = (newData, oldData, resolve) => {
     let errorList = [];
     if (errorList.length < 1) {
-      PackageServices.updateService(
-        newData._id,
-        newData.serviceType,
-        newData.name,
-        newData.price,
-        newData.description,
-        newData.timeRequired,
-        newData.where
-      )
+      packages
+        .updateService(
+          newData._id,
+          newData.serviceType,
+          newData.name,
+          newData.price,
+          newData.description,
+          newData.timeRequired,
+          newData.where
+        )
         .then((res) => {
           const dataUpdate = [...services];
           const index = oldData.tableData.id;
