@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { authService } from "../../services/customer/authentication/auth_service";
-import CustomerService from "../../services/customer/customer_service";
-import BikeService from "../../services/member/Bike/bike_services";
+import { customerService } from "../../services/customer/customer_service";
+import { bikeService } from "../../services/member/Bike/bike_services";
 import PackageService from "../../services/member/package/package_services";
 import "./CSS/Order.css";
 import { Card, Grid, TextField, Button } from "@mui/material";
@@ -28,7 +28,8 @@ function Order(props) {
   };
 
   const getBike = () => {
-    BikeService.findBikeById(bikeId)
+    bikeService
+      .findBikeById(bikeId)
       .then((res) => {
         setBike(res);
       })
@@ -51,15 +52,16 @@ function Order(props) {
   });
 
   const onSubmit = (values) => {
-    CustomerService.placeOrder(
-      user.userId,
-      user.name,
-      bike.name,
-      values.carNumber,
-      values.custAddress,
-      service.name,
-      service.price
-    )
+    customerService
+      .placeOrder(
+        user.userId,
+        user.name,
+        bike.name,
+        values.carNumber,
+        values.custAddress,
+        service.name,
+        service.price
+      )
       .then((response) => {
         enqueueSnackbar(response, {
           variant: "success",

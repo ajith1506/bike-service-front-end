@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "../auth_header";
 
-const API_URL = "http://localhost:3002/admin/bike-func/";
+const API_URL = "http://localhost:3000/admin/bike-func/";
 
 class BikeService {
   getAllBrands() {
@@ -106,4 +106,4 @@ class BikeService {
   }
 }
 
-export default new BikeService();
+export const bikeService = new BikeService();

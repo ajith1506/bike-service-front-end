@@ -14,7 +14,7 @@ function Register(props) {
   const onSubmit = (values) => {
     authService
       .register(values.name, values.email, values.password)
-      .then((respone) => {
+      .then((response) => {
         props.history.push("/login");
       });
   };
@@ -72,7 +72,7 @@ function Register(props) {
           {errors.password && (
             <span className="span">{errors.password.message}</span>
           )}
-          <Button className="login__button" type="submit" block color="primary">
+          <Button className="login__button" type="submit" variant="primary">
             Sign Up
           </Button>
           <Grid className="login__grid" container>

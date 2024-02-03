@@ -46,4 +46,4 @@ class AdminOrders {
   }
 }
 
-export default new AdminOrders();
+export const adminOrders = new AdminOrders();

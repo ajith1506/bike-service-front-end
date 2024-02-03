@@ -4,7 +4,7 @@ import authHeader from "./authentication/auth_header";
 
 const ORDER_URL = "http://localhost:3000/order/";
 
-const CUST_ORDER = "http://localhost:3000/customer/order";
+const CUST_ORDER = "http://localhost:3000/customer/order/";
 
 class CustomerService {
   placeOrder(
@@ -65,4 +65,4 @@ class CustomerService {
   }
 }
 
-export default new CustomerService();
+export const customerService = new CustomerService();

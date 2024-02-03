@@ -1,7 +1,8 @@
 import axios from "axios";
 import authHeader from "../auth_header";
+import mechHeader from "../mech_header";
 
-const API_URL = "http://localhost:3001/admin/mechanic/";
+const API_URL = "http://localhost:3000/admin/mechanic/";
 const ACC_URL = "http://localhost:3000/mechanic/account/";
 
 class MechanicService {
@@ -46,4 +47,4 @@ class MechanicService {
   }
 }
 
-export default new MechanicService();
+export const mechanicService = new MechanicService();

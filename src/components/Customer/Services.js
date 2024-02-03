@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import "./CSS/Services.css";
-import Package from "../../services/member/package/package_services";
+import { packages } from "../../services/member/package/package_services";
 import { Grid } from "@mui/material";
 
 const useStyles = makeStyles({
@@ -25,7 +25,8 @@ export default function Services(props) {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    Package.getAllServices()
+    packages
+      .getAllServices()
       .then((response) => {
         setServices(response);
       })

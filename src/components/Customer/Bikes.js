@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./CSS/Brands.css";
-import BikeService from "../../services/member/Bike/bike_services";
+import { bikeService } from "../../services/member/Bike/bike_services";
 
 function Bikes(props) {
   const { match, history } = props;
@@ -25,7 +25,8 @@ function Bikes(props) {
   };
 
   const retrieveBikes = () => {
-    BikeService.getCarsByBrand(brand)
+    bikeService
+      .getCarsByBrand(brand)
       .then((response) => {
         setBikes(response);
       })

@@ -8,7 +8,6 @@ import "mdbreact/dist/css/mdb.css";
 import "fontsource-roboto";
 import { BrowserRouter as Router } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
-import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,5 +17,3 @@ root.render(
     </SnackbarProvider>
   </Router>
 );
-
-reportWebVitals();

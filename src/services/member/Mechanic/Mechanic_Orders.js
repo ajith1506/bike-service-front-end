@@ -51,4 +51,4 @@ class MechanicOrders {
   }
 }
 
-export default new MechanicOrders();
+export const mechanicOrders = new MechanicOrders();

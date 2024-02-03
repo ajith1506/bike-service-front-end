@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "../auth_header";
 
-const API_URL = "http://localhost:3000/admin/car-services";
+const API_URL = "http://localhost:3000/admin/bike-services/";
 
 class Package {
   getAllServices() {
@@ -89,4 +89,4 @@ class Package {
   }
 }
 
-export default new Package();
+export const packages = new Package();

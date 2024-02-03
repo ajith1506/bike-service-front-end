@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./CSS/Brands.css";
-import BikeService from "../../services/member/Bike/bike_services";
+import { bikeService } from "../../services/member/Bike/bike_services";
 
 function Brands(props) {
   const { history } = props;
@@ -21,7 +21,8 @@ function Brands(props) {
   };
 
   const retrieveBrands = () => {
-    BikeService.getAllBrands()
+    bikeService
+      .getAllBrands()
       .then((response) => {
         setbrands(response);
       })

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const AUTH_URL = "http://localhost:3000/customer/auth";
+const AUTH_URL = "http://localhost:3000/customer/auth/";
 
 class AuthService {
   constructor() {

@@ -26,8 +26,8 @@ function Services() {
   }, []);
 
   const dynamicTypeLookUp = {
-    1: "Car Care Services",
-    2: "Periodic Car Service",
+    1: "Bike Care service",
+    2: "Periodic Bike Service",
   };
   const dynamicWhereLookUp = {
     1: "Free Pickup & Drop",
@@ -146,7 +146,7 @@ function Services() {
   };
 
   return (
-    <div className="cars_container">
+    <div className="bike_container">
       <Table
         title="SERVICES DATA"
         columns={columns}
