@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../Admin/CSS/AdminHome.css";
 import HomeIcon from "@mui/icons-material/Home";
 import DriveEtaIcon from "@mui/icons-material/DriveEta";
@@ -11,33 +11,34 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function MechanicHome(props) {
-  const { history } = props;
+function MechanicHome() {
+  const navigate = useNavigate();
 
   const itemList = [
     {
       text: "HOME",
       icon: <HomeIcon />,
-      onClick: () => history.push("/mechanic_home"),
+      onClick: () => navigate("/mechanic_home"),
     },
     {
       text: "FIND ORDERS",
       icon: <DriveEtaIcon />,
-      onClick: () => history.push("/mechanic_home/findOrders"),
+      onClick: () => navigate("/mechanic_home/findOrders"),
     },
     {
       text: "MY ORDERS",
       icon: <MonetizationOnIcon />,
-      onClick: () => history.push("/mechanic_home/myorders"),
+      onClick: () => navigate("/mechanic_home/myorders"),
     },
     {
       text: "Log Out",
       icon: <ExitToAppIcon />,
-      onClick: () => history.push("/login"),
+      onClick: () => navigate("/login"),
     },
   ];
+
   return (
     <div className="admin_home">
       <hr />
@@ -60,4 +61,4 @@ function MechanicHome(props) {
   );
 }
 
-export default withRouter(MechanicHome);
+export default MechanicHome;

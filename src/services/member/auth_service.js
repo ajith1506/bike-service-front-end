@@ -1,45 +1,55 @@
-import axios from "axios";
 import authHeader from "../member/auth_header";
 
-const AUTH_URL = "http://localhost:3000/admin/auth/";
-
 class AuthService {
-  login(email, password) {
-    return axios
-      .post(AUTH_URL + "login", { email, password })
-      .then((response) => {
-        if (response.data.token) {
-          if (response.data.role === "ADMIN") {
-            console.log(response.data.name);
-            localStorage.setItem("admin", JSON.stringify(response.data));
-          } else {
-            console.log(response.data.name);
-            localStorage.setItem("mechanic", JSON.stringify(response.data));
-          }
+  async login(email, password) {
+    try {
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
         }
-        console.log(response.data.role);
-        return response.data;
-      })
-      .catch((err) => {
-        console.log("Login Error" + err);
-      });
+      );
+
+      const data = await response.json();
+      if (data.token) {
+        if (data.role === "ADMIN") {
+          console.log(data.name);
+          localStorage.setItem("admin", JSON.stringify(data));
+        } else {
+          console.log(data.name);
+          localStorage.setItem("mechanic", JSON.stringify(data));
+        }
+      }
+      console.log(data.role);
+      return data;
+    } catch (error) {
+      console.log("Login Error", error);
+    }
   }
 
-  registerMechanic(name, email, password, mobile) {
-    return axios
-      .post(
-        AUTH_URL + "register",
-        { name, email, password, mobile },
+  async registerMechanic(name, email, password, mobile) {
+    try {
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/auth/register",
         {
-          headers: authHeader(),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+          },
+          body: JSON.stringify({ name, email, password, mobile }),
         }
-      )
-      .then((res) => {
-        return res.data.message;
-      })
-      .catch((err) => {
-        console.log("register error" + err);
-      });
+      );
+
+      const data = await response.json();
+      return data.message;
+    } catch (error) {
+      console.log("Register Mechanic Error", error);
+    }
   }
 
   logout() {
@@ -48,21 +58,34 @@ class AuthService {
   }
 
   logoutMechanic() {
-    localStorage.removeItem("Mechanic");
+    localStorage.removeItem("mechanic");
     console.log("Inside logout method");
   }
 
-  register(name, email, password) {
-    return axios.post(AUTH_URL + "register", {
-      name,
-      email,
-      password,
-    });
+  async register(name, email, password) {
+    try {
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        }
+      );
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log("Register Error", error);
+    }
   }
 
   getCurrentMechanic() {
     return JSON.parse(localStorage.getItem("mechanic"));
   }
+
   getAdmin() {
     return JSON.parse(localStorage.getItem("admin"));
   }

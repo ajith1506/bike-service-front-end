@@ -1,53 +1,64 @@
-import axios from "axios";
 import mechHeader from "../mech_header";
 
-const API_URL = "http://localhost:3000/mechanic/orders/";
-
 class MechanicOrders {
-  getInProcessOrders(mechId) {
-    console.log("Method: " + mechId);
-    return axios
-      .get(API_URL + `findInProcessOrders/${mechId}`, {
-        headers: mechHeader(),
-      })
-      .then((res) => {
-        return res.data.orders;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  updateOrder(orderId, status) {
-    return axios
-      .patch(
-        API_URL + `updateOrder/${orderId}`,
+  async getInProcessOrders(mechId) {
+    try {
+      console.log("Method: " + mechId);
+      const response = await fetch(
+        `https://mechanic-5awn.onrender.com/mechanic/orders/findInProcessOrders/${mechId}`,
         {
-          status,
-        },
-        {
-          headers: mechHeader(),
+          headers: {
+            ...mechHeader(),
+          },
         }
-      )
-      .then((res) => {
-        return res.data.message;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      );
+
+      const data = await response.json();
+      return data.orders;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getAllOrders(mechId) {
-    return axios
-      .get(API_URL + `findMyOrders/${mechId}`, {
-        headers: mechHeader(),
-      })
-      .then((res) => {
-        return res.data.orders;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async updateOrder(orderId, status) {
+    try {
+      const response = await fetch(
+        `https://mechanic-5awn.onrender.com/mechanic/orders/updateOrder/${orderId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            ...mechHeader(),
+          },
+          body: JSON.stringify({
+            status,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      return data.message;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getAllOrders(mechId) {
+    try {
+      const response = await fetch(
+        `https://mechanic-5awn.onrender.com/mechanic/orders/findMyOrders/${mechId}`,
+        {
+          headers: {
+            ...mechHeader(),
+          },
+        }
+      );
+
+      const data = await response.json();
+      return data.orders;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

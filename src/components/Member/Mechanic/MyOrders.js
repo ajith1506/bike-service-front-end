@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MechanicOrders from "../../../services/member/Mechanic/Mechanic_Orders";
+import { mechanicOrders } from "../../../services/member/Mechanic/Mechanic_Orders";
 import { authService } from "../../../services/member/auth_service";
 import "../Admin/CSS/Bikes.css";
 
@@ -16,7 +16,8 @@ function MyOrders() {
 
   useEffect(() => {
     const mechanic = authService.getCurrentMechanic();
-    MechanicOrders.getAllOrders(mechanic.userId)
+    mechanicOrders
+      .getAllOrders(mechanic.userId)
       .then((response) => {
         setOrders(response);
       })

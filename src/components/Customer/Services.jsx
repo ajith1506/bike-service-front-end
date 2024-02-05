@@ -38,13 +38,13 @@ export default function Services(props) {
   const getServiceCards = (res) => {
     var type,
       where = "";
-    if (res.serviceType == 1) {
+    if (res.serviceType === 1) {
       type = "Bike Care Services";
     } else {
       type = "Periodic Bike Service";
     }
 
-    if (res.where == 1) {
+    if (res.where === 1) {
       where = "Free Pickup & Drop";
     } else {
       where = "Service @ Doorstep";

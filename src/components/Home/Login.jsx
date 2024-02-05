@@ -1,8 +1,8 @@
 // Login.js
 
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { authService } from "../../services/customer/authentication/auth_service";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
@@ -14,17 +14,31 @@ import Typography from "@mui/material/Typography";
 import { useSnackbar } from "notistack";
 import "./Login.css";
 
-export default function Login(props) {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+export default function Login() {
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(false);
+
   const { handleSubmit, register, errors } = useForm({
     mode: "onBlur",
   });
-  const onSubmit = (values) => {
-    authService.login(values.email, values.password).then((response) => {
+
+  const onSubmit = async (values) => {
+    try {
+      setLoading(true);
+      const response = await authService.login(values.email, values.password);
       console.log(response);
-      props.history.push("/cust_home");
-    });
+      setLoading(false);
+      navigate("/cust_home");
+    } catch (error) {
+      console.error("Login Error", error);
+      setLoading(false);
+      enqueueSnackbar("Login failed. Please check your credentials.", {
+        variant: "error",
+      });
+    }
   };
+
   return (
     <Container maxWidth="xs">
       <div className="login__form">
@@ -65,8 +79,14 @@ export default function Login(props) {
           {errors.password && (
             <span className="span">{errors.password.message}</span>
           )}
-          <Button className="login__button" type="submit" block color="primary">
-            Sign In
+          <Button
+            className="login__button"
+            type="submit"
+            block
+            color="primary"
+            disabled={loading}
+          >
+            {loading ? "Signing In..." : "Sign In"}
           </Button>
           <Grid className="login__grid" container>
             <Grid item xs>

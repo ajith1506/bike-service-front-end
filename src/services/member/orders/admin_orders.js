@@ -1,48 +1,59 @@
 import authHeader from "../auth_header";
-import axios from "axios";
-
-const ORDER_URL = "http://localhost:3000/admin/order/";
-const COMPLTED_ORDERS_URL = "http://localhost:3004/order/";
 
 class AdminOrders {
-  findPlacedOrders() {
-    return axios
-      .get(ORDER_URL + "findPlacedOrder", { headers: authHeader() })
-      .then((res) => {
-        console.log(res.data);
-        return res.data.orders;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  assignOrder(orderId, mechanicId) {
-    return axios
-      .patch(
-        ORDER_URL + `updateOrder/${orderId}`,
+  async findPlacedOrders() {
+    try {
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/order/findPlacedOrder",
         {
-          mechanicId,
-        },
-        { headers: authHeader() }
-      )
-      .then((res) => {
-        return res.data.message;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          headers: {
+            ...authHeader(),
+          },
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+      return data.orders;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findCompletedOrders() {
-    return axios
-      .get(COMPLTED_ORDERS_URL + "findCompltedOrders")
-      .then((res) => {
-        return res.data.orders;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async assignOrder(orderId, mechanicId) {
+    try {
+      const response = await fetch(
+        `https://admin-l2u6.onrender.com/admin/order/updateOrder/${orderId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+          },
+          body: JSON.stringify({
+            mechanicId,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      return data.message;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async findCompletedOrders() {
+    try {
+      const response = await fetch(
+        "https://order-vlct.onrender.com/order/findCompltedOrders"
+      );
+
+      const data = await response.json();
+      return data.orders;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

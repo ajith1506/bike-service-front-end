@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
 import "../Home/Navbar.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { authService } from "../../services/customer/authentication/auth_service";
 
 function CustNav() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
+    const handleScroll = () => {
       if (window.scrollY > 100) {
         setShow(true);
-      } else setShow(false);
-    });
+      } else {
+        setShow(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
     return () => {
-      window.removeEventListener("scroll", () => {});
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -22,7 +27,7 @@ function CustNav() {
   };
 
   return (
-    <nav className={`nav ${show && "nav__scroll"}`}>
+    <nav className={`nav ${show ? "nav__scroll" : ""}`}>
       <a href="/cust_home">
         <img
           className="nav__logo"
@@ -32,30 +37,30 @@ function CustNav() {
       </a>
       <div
         className={`nav__container nav__borderXwidth ${
-          show && "nav__containerscroll nav__borderXwidthscroll"
+          show ? "nav__containerscroll nav__borderXwidthscroll" : ""
         }`}
       >
         <NavLink
-          className={`nav__link ${show && "nav__linkscroll"}`}
+          className={`nav__link ${show ? "nav__linkscroll" : ""}`}
           to="/cust_home"
         >
           HOME
         </NavLink>
         <NavLink
-          className={`nav__link ${show && "nav__linkscroll"}`}
+          className={`nav__link ${show ? "nav__linkscroll" : ""}`}
           to="/cust_home/contact"
         >
           CONTACT US
         </NavLink>
         <NavLink
-          className={`nav__link ${show && "nav__linkscroll"}`}
+          className={`nav__link ${show ? "nav__linkscroll" : ""}`}
           to="/cust_home/mybookings"
         >
           MY BOOKINGS
         </NavLink>
         <NavLink
           onClick={logout}
-          className={`nav__link ${show && "nav__linkscroll"}`}
+          className={`nav__link ${show ? "nav__linkscroll" : ""}`}
           to="/login"
         >
           LOGOUT

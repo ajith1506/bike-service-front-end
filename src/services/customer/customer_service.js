@@ -1,13 +1,7 @@
-import axios from "axios";
-
 import authHeader from "./authentication/auth_header";
 
-const ORDER_URL = "http://localhost:3000/order/";
-
-const CUST_ORDER = "http://localhost:3000/customer/order/";
-
 class CustomerService {
-  placeOrder(
+  async placeOrder(
     customerId,
     customerName,
     bikeName,
@@ -16,52 +10,62 @@ class CustomerService {
     serviceName,
     servicePrice
   ) {
-    return axios
-      .post(
-        ORDER_URL + "addOrder",
+    try {
+      const response = await fetch(
+        "https://order-vlct.onrender.com/order/addOrder",
         {
-          customerId,
-          customerName,
-          bikeName,
-          bikeNumber,
-          custAddress,
-          serviceName,
-          servicePrice,
-        },
-        {
-          headers: authHeader(),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+          },
+          body: JSON.stringify({
+            customerId,
+            customerName,
+            bikeName,
+            bikeNumber,
+            custAddress,
+            serviceName,
+            servicePrice,
+          }),
         }
-      )
-      .then((response) => {
-        return response.data.message;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      );
+
+      const data = await response.json();
+      return data.message;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findMyOrders(id) {
-    return axios
-      .get(CUST_ORDER + `findOrders/${id}`, {
-        headers: authHeader(),
-      })
-      .then((response) => {
-        return response.data.orders;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async findMyOrders(id) {
+    try {
+      const response = await fetch(
+        `https://customer-dw86.onrender.com/customer/order/findOrders/${id}`,
+        {
+          headers: {
+            ...authHeader(),
+          },
+        }
+      );
+
+      const data = await response.json();
+      return data.orders;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findCustomerById(id) {
-    return axios
-      .get(`http://localhost:3000/customer/account/findCustById/${id}`)
-      .then((res) => {
-        return res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async findCustomerById(id) {
+    try {
+      const response = await fetch(
+        `https://customer-dw86.onrender.com/customer/account/findCustById/${id}`
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

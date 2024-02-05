@@ -1,49 +1,61 @@
-import axios from "axios";
 import authHeader from "../auth_header";
 import mechHeader from "../mech_header";
 
-const API_URL = "http://localhost:3000/admin/mechanic/";
-const ACC_URL = "http://localhost:3000/mechanic/account/";
-
 class MechanicService {
-  findAll() {
-    return axios
-      .get(API_URL + "findAll", {
-        headers: authHeader(),
-      })
-      .then((res) => {
-        return res.data.response;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async findAll() {
+    try {
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/mechanic/findAll",
+        {
+          headers: {
+            ...authHeader(),
+          },
+        }
+      );
+
+      const data = await response.json();
+      return data.response;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  deleteAccount(id) {
-    return axios
-      .delete(ACC_URL + `delete/${id}`, {
-        headers: authHeader(),
-      })
-      .then((res) => {
-        console.log(res);
-        return res.data.message;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async deleteAccount(id) {
+    try {
+      const response = await fetch(
+        `https://mechanic-5awn.onrender.com/mechanic/account/delete/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            ...mechHeader(),
+          },
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+      return data.message;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findAvailable() {
-    return axios
-      .get(API_URL + "findAvailable", {
-        headers: authHeader(),
-      })
-      .then((res) => {
-        return res.data.response;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async findAvailable() {
+    try {
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/mechanic/findAvailable",
+        {
+          headers: {
+            ...authHeader(),
+          },
+        }
+      );
+
+      const data = await response.json();
+      return data.response;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

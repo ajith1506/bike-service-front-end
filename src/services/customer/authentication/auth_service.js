@@ -1,26 +1,30 @@
-import axios from "axios";
-
-const AUTH_URL = "http://localhost:3000/customer/auth/";
-
 class AuthService {
   constructor() {
     this.authenticated = false;
   }
+
   login(email, password) {
-    return axios
-      .post(AUTH_URL + "login", { email, password })
-      .then((response) => {
-        if (response.data.token) {
-          console.log(response.data.userId);
+    return fetch("https://customer-dw86.onrender.com/customer/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.token) {
+          console.log(data.userId);
           this.authenticated = true;
-          localStorage.setItem("customer", JSON.stringify(response.data));
+          localStorage.setItem("customer", JSON.stringify(data));
         }
-        return response.data;
+        return data;
       })
       .catch((err) => {
-        console.log("Login Error" + err);
-
-        return err;
+        console.log("Login Error", err);
       });
   }
 
@@ -29,17 +33,41 @@ class AuthService {
     localStorage.removeItem("customer");
     console.log("Inside Logout method");
   }
-
   register(name, email, password) {
-    return axios.post(AUTH_URL + "register", {
-      name,
-      email,
-      password,
-    });
+    return fetch(" https://customer-dw86.onrender.com/customer/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.token) {
+          console.log(data.userId);
+          this.authenticated = true;
+          localStorage.setItem("customer", JSON.stringify(data));
+        }
+        return data;
+      })
+      .catch((err) => {
+        console.log("Registration Error", err);
+      });
   }
+
   isAuthenticated() {
     return this.authenticated;
   }
+
   getCurrentCustomer() {
     return JSON.parse(localStorage.getItem("customer"));
   }

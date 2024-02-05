@@ -15,42 +15,42 @@ import {
   ListItemText,
   makeStyles,
 } from "@mui/material";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function AdminHome(props) {
-  const { history } = props;
+function AdminHome() {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
 
   const itemList = [
     {
       text: "HOME",
       icon: <HomeIcon />,
-      onClick: () => history.push("/admin_home"),
+      onClick: () => navigate("/admin_home"),
     },
     {
       text: "BIKES",
       icon: <DriveEtaIcon />,
-      onClick: () => history.push("/admin_home/bikes"),
+      onClick: () => navigate("/admin_home/bikes"),
     },
     {
       text: "Services",
       icon: <BallotIcon />,
-      onClick: () => history.push("/admin_home/packages"),
+      onClick: () => navigate("/admin_home/packages"),
     },
     {
       text: "Mechanics",
       icon: <SupervisorAccountIcon />,
-      onClick: () => history.push("/admin_home/mechanics"),
+      onClick: () => navigate("/admin_home/mechanics"),
     },
     {
       text: "Orders",
       icon: <MonetizationOnIcon />,
-      onClick: () => history.push("/admin_home/orders"),
+      onClick: () => navigate("/admin_home/orders"),
     },
     {
       text: "Log Out",
       icon: <ExitToAppIcon />,
-      onClick: () => history.push("/login"),
+      onClick: () => navigate("/login"),
     },
   ];
 
@@ -97,4 +97,4 @@ function AdminHome(props) {
   );
 }
 
-export default withRouter(AdminHome);
+export default AdminHome;

@@ -1,45 +1,47 @@
-import axios from "axios";
 import authHeader from "../auth_header";
 
-const API_URL = "http://localhost:3000/admin/bike-services/";
-
 class Package {
-  getAllServices() {
-    return axios
-      .get(API_URL + "findAll")
-      .then((response) => {
-        return response.data.service;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async getAllServices() {
+    try {
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/bike-services/findAll"
+      );
+      const data = await response.json();
+      return data.service;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  addService(serviceType, name, price, description, timeRequired, where) {
-    return axios
-      .post(
-        API_URL + "addService",
+  async addService(serviceType, name, price, description, timeRequired, where) {
+    try {
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/bike-services/addService",
         {
-          serviceType,
-          name,
-          price,
-          description,
-          timeRequired,
-          where,
-        },
-        {
-          headers: authHeader(),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+          },
+          body: JSON.stringify({
+            serviceType,
+            name,
+            price,
+            description,
+            timeRequired,
+            where,
+          }),
         }
-      )
-      .then((res) => {
-        return res.data.message;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      );
+
+      const data = await response.json();
+      return data.message;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  updateService(
+  async updateService(
     id,
     serviceType,
     name,
@@ -48,44 +50,63 @@ class Package {
     timeRequired,
     where
   ) {
-    return axios
-      .patch(
-        API_URL + `updateService/${id}`,
-        { id, serviceType, name, price, description, timeRequired, where },
+    try {
+      const response = await fetch(
+        `https://admin-l2u6.onrender.com/admin/bike-services/updateService/${id}`,
         {
-          headers: authHeader(),
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+          },
+          body: JSON.stringify({
+            id,
+            serviceType,
+            name,
+            price,
+            description,
+            timeRequired,
+            where,
+          }),
         }
-      )
-      .then((res) => {
-        return res.data.message;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      );
+
+      const data = await response.json();
+      return data.message;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  deleteService(id) {
-    return axios
-      .delete(API_URL + `deleteService/${id}`, {
-        headers: authHeader(),
-      })
-      .then((res) => {
-        return res.data.status;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async deleteService(id) {
+    try {
+      const response = await fetch(
+        `https://admin-l2u6.onrender.com/admin/bike-services/deleteService/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            ...authHeader(),
+          },
+        }
+      );
+
+      const data = await response.json();
+      return data.status;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findServiceById(id) {
-    return axios
-      .get(API_URL + `findById/${id}`)
-      .then((res) => {
-        return res.data.response;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async findServiceById(id) {
+    try {
+      const response = await fetch(
+        `https://admin-l2u6.onrender.com/admin/bike-services/findById/${id}`
+      );
+      const data = await response.json();
+      return data.response;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

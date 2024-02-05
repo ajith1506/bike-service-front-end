@@ -1,3 +1,5 @@
+// auth_header.js
+
 export default function authHeader() {
   const customer = JSON.parse(localStorage.getItem("customer"));
 

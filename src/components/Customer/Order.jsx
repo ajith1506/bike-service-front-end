@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { authService } from "../../services/customer/authentication/auth_service";
 import { customerService } from "../../services/customer/customer_service";
 import { bikeService } from "../../services/member/Bike/bike_services";
-import PackageService from "../../services/member/package/package_services";
+import { packages } from "../../services/member/package/package_services";
 import "./CSS/Order.css";
 import { Card, Grid, TextField, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
@@ -18,7 +18,8 @@ function Order(props) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const getPackage = () => {
-    PackageService.findServiceById(serviceId)
+    packages
+      .findServiceById(serviceId)
       .then((res) => {
         setService(res);
       })

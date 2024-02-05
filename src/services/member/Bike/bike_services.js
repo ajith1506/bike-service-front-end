@@ -1,108 +1,133 @@
-import axios from "axios";
 import authHeader from "../auth_header";
 
-const API_URL = "http://localhost:3000/admin/bike-func/";
-
 class BikeService {
-  getAllBrands() {
-    return axios
-      .get(API_URL + "findAllBrands")
-      .then((response) => {
-        //console.log(response.data);
-        return response.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async getAllBrands() {
+    try {
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/bike-func/findAllBrands"
+      );
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getBikesByBrand(brand) {
-    console.log("Get Brand: " + brand);
-    return axios
-      .post(API_URL + "findByBrand", { brand })
-      .then((response) => {
-        //console.log(response.data.cars[0]);
-        return response.data.cars;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  getAllBikes() {
-    return axios
-      .get(API_URL + "findAll")
-      .then((response) => {
-        //console.log(response.data);
-        return response.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  addBike(name, brand) {
-    return axios
-      .post(
-        API_URL + "addBike",
+  async getBikesByBrand(brand) {
+    try {
+      console.log("Get Brand: " + brand);
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/bike-func/findByBrand",
         {
-          name,
-          brand,
-        },
-        {
-          headers: authHeader(),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            brand,
+          }),
         }
-      )
-      .then((response) => {
-        return response.data.message;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      );
+
+      const data = await response.json();
+
+      return data.bikes;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  deleteBike(bikeId) {
-    return axios
-      .delete(API_URL + `deleteBike/${bikeId}`, {
-        headers: authHeader(),
-      })
-      .then((res) => {
-        console.log(res);
-        return res.data.message;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async getAllBikes() {
+    try {
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/bike-func/findAll"
+      );
+      const data = await response.json();
+      // console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  updateBike(bikeId, brand) {
-    return axios
-      .patch(
-        API_URL + `updateBike/${bikeId}`,
+  async addBike(name, brand) {
+    try {
+      const response = await fetch(
+        "https://admin-l2u6.onrender.com/admin/bike-func/addBike",
         {
-          brand,
-        },
-        {
-          headers: authHeader(),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+          },
+          body: JSON.stringify({
+            name,
+            brand,
+          }),
         }
-      )
-      .then((response) => {
-        return response.data.message;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      );
+
+      const data = await response.json();
+      return data.message;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findBikeById(bikeId) {
-    return axios
-      .get(API_URL + `findByBike/${bikeId}`)
-      .then((response) => {
-        return response.data.response;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async deleteBike(bikeId) {
+    try {
+      const response = await fetch(
+        `https://admin-l2u6.onrender.com/admin/bike-func/deleteBike/${bikeId}`,
+        {
+          method: "DELETE",
+          headers: {
+            ...authHeader(),
+          },
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+      return data.message;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async updateBike(bikeId, brand) {
+    try {
+      const response = await fetch(
+        `https://admin-l2u6.onrender.com/admin/bike-func/updateBike/${bikeId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+          },
+          body: JSON.stringify({
+            brand,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      return data.message;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async findBikeById(bikeId) {
+    try {
+      const response = await fetch(
+        `https://admin-l2u6.onrender.com/admin/bike-func/findByBike/${bikeId}`
+      );
+      const data = await response.json();
+      return data.response;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
